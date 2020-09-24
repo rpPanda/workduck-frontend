@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="56bbe7bb-07f0-4318-9fea-581c497c0f7b" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.eslintrc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workduck-fromtend.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/farmer.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/awsClient/config.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/awsClient/initialize-amplify.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/awsClient/models/profileModels.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/awsClient/profileClient.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/DrawerListComponent.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/HeaderComponent.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/HomeComponent.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/LoadingComponent.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/MainComponent.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ProfileChartComponent.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ProfileComponent.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ProfileListComponent.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/SignInCompnent.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/SignUpComponent.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/UploadApkComponent.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/libs/contextLib.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/libs/hooksLib.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript JSX File" />
+        <option value="TypeScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="$APPLICATION_HOME_DIR$/plugins/maven/lib/maven3" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="1hlpL2MBzaizAf1D6oR3UM7yL6f" />
+  <component name="ProjectViewState">
+    <option name="autoscrollFromSource" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="js.linters.configure.manually.selectedeslint" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../workduck-backend" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.standard" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="$USER_HOME$/.nvm/versions/node/v10.22.0/bin/node" />
+    <property name="node.js.path.for.package.standard" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.standard" value="" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="yarn" />
+    <property name="settings.editor.selected.configurable" value="settings.typescriptcompiler" />
+    <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/awsClient" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="56bbe7bb-07f0-4318-9fea-581c497c0f7b" name="Default Changelist" comment="" />
+      <created>1600595473631</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1600595473631</updated>
+      <workItem from="1600595474866" duration="12084000" />
+      <workItem from="1600665948326" duration="20439000" />
+      <workItem from="1600769162009" duration="12776000" />
+      <workItem from="1600876017606" duration="2947000" />
+      <workItem from="1600923784278" duration="2865000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="806" y="445" width="698" height="452" key="#ESLint" timestamp="1600595838114">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state x="806" y="445" width="698" height="452" key="#ESLint/0.27.1920.1053@0.27.1920.1053" timestamp="1600595838114" />
+    <state x="743" y="311" width="424" height="491" key="FileChooserDialogImpl" timestamp="1600923887923">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state x="743" y="311" width="424" height="491" key="FileChooserDialogImpl/0.27.1920.1053@0.27.1920.1053" timestamp="1600923887923" />
+    <state x="449" y="188" width="1022" height="737" key="SettingsEditor" timestamp="1600596010568">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state x="449" y="188" width="1022" height="737" key="SettingsEditor/0.27.1920.1053@0.27.1920.1053" timestamp="1600596010568" />
+    <state x="651" y="292" width="1010" height="626" key="find.popup" timestamp="1600789117223">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state x="651" y="292" width="1010" height="626" key="find.popup/0.27.1920.1053@0.27.1920.1053" timestamp="1600789117223" />
+    <state x="624" y="252" key="run.anything.popup" timestamp="1600925723396">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state x="624" y="252" key="run.anything.popup/0.27.1920.1053@0.27.1920.1053" timestamp="1600925723396" />
+    <state x="623" y="259" width="672" height="678" key="search.everywhere.popup" timestamp="1600788720499">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state x="623" y="259" width="672" height="678" key="search.everywhere.popup/0.27.1920.1053@0.27.1920.1053" timestamp="1600788720499" />
+  </component>
+</project>
