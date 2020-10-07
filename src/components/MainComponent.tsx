@@ -6,6 +6,7 @@ import SignUp from "./SignUpComponent";
 import MenuAppBar from "./HeaderComponent";
 import Profile from "./ProfileComponent";
 import {makeStyles} from "@material-ui/core/styles";
+import Result from "./ActionResult";
 
 const useStyles = makeStyles((theme) => ({
     appBarSpacer: theme.mixins.toolbar,
@@ -36,6 +37,9 @@ export default function Main() {
                     </Route>
                     <Route path="/profile">
                         <Profile/>
+                    </Route>
+                    <Route path="/result">
+                        <Result/>
                     </Route>
                     <Route path="/">
                         <Home/>

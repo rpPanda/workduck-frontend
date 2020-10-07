@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import clsx from 'clsx';
 import {makeStyles} from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
@@ -10,7 +10,11 @@ import Link from '@material-ui/core/Link';
 import {deepOrange} from "@material-ui/core/colors";
 import {Avatar} from "@material-ui/core";
 import InteractiveList from "./ProfileListComponent";
-import ProfileChart from "./ProfileChartComponent";
+import {getUser} from "../awsClient/profileClient";
+import { useHistory } from 'react-router-dom';
+import {GetUserResponse} from "../awsClient/models/profileModels";
+import Loading from "./LoadingComponent";
+import {createProject, getProject} from "../awsClient/devicefarmClient";
 
 function Copyright() {
     return (
@@ -111,32 +115,46 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+
 export default function Dashboard() {
+    const [user,setUser] = useState<GetUserResponse | undefined>();
+    const [loading,setLoading] = useState(true);
     const classes = useStyles();
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+    const history = useHistory();
+    useEffect(() => {
+        onLoad();
+    },[])
 
+    async function onLoad(){
+        try {
+            const user = await getUser()
+            const resp = await getProject()
+            setUser(user)
+        } catch (e) {
+            history.push("/")
+        } finally {
+            setLoading(false)
+        }
+    }
     return (
         <div>
             <Container className={classes.container}>
                 <Grid style={{"width": "100%"}} container spacing={3}>
-                    {/* Chart */}
                     <Grid item xs={12} md={8} lg={3}>
                         <Paper className={fixedHeightPaper}>
                             <Avatar variant="square" className={classes.square}>
-                                RP
+                                Panda Boss
                             </Avatar>
                         </Paper>
                     </Grid>
-                    {/* Recent Deposits */}
                     <Grid item xs={12} md={4} lg={9}>
                         <Paper className={fixedHeightPaper}>
-                            <InteractiveList/>
+                            <InteractiveList userInfo={user}/>
                         </Paper>
                     </Grid>
-                    {/* Recent Orders */}
                     <Grid item xs={12} md={12}>
                         <Paper className={classes.paper}>
-                            <ProfileChart/>
                         </Paper>
                     </Grid>
                 </Grid>
@@ -144,6 +162,7 @@ export default function Dashboard() {
                     <Copyright/>
                 </Box>
             </Container>
+            <Loading isLoading={loading}/>
         </div>
     );
 }

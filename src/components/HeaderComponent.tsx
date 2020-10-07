@@ -171,27 +171,34 @@ export default function MenuAppBar() {
                     <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
                         Dashboard
                     </Typography>
-                    <IconButton aria-controls={"simple-menu"} aria-haspopup="true" onClick={handleClick}
-                                color="inherit">
+                    <IconButton onClick={handleClick} color="inherit">
                         <Badge badgeContent={4} color="secondary">
                             <AccountCircleOutlined fontSize={"large"}/>
                         </Badge>
                     </IconButton>
-                    <Menu
-                        id="simple-menu"
-                        anchorEl={anchorEl}
-                        open={Boolean(anchorEl)}
-                        onClose={handleClose}
-                    >
-                        {isAuth && [<MenuItem onClick={handleProfileClick}>Profile</MenuItem>,
-                            <MenuItem onClick={handleProfileClick}>My account</MenuItem>,
-                            <MenuItem onClick={handleLogout}>Logout</MenuItem>]}
-                        {!isAuth && [<MenuItem onClick={handleSignIn}>Log In</MenuItem>,
-                            <MenuItem onClick={handleSignUp}>Sign Up</MenuItem>]
-                        }
-                    </Menu>
                 </Toolbar>
             </AppBar>
+            <Menu
+                id="simple-menu"
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+                anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'center'
+                }}
+                transformOrigin={{
+                    vertical: -50,
+                    horizontal: 'center'
+                }}
+            >
+                {isAuth && [<MenuItem onClick={handleProfileClick}>Profile</MenuItem>,
+                    <MenuItem onClick={handleProfileClick}>My account</MenuItem>,
+                    <MenuItem onClick={handleLogout}>Logout</MenuItem>]}
+                {!isAuth && [<MenuItem onClick={handleSignIn}>Log In</MenuItem>,
+                    <MenuItem onClick={handleSignUp}>Sign Up</MenuItem>]
+                }
+            </Menu>
             {isAuth && <Drawer
                 variant="permanent"
                 classes={{

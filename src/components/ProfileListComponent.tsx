@@ -5,7 +5,8 @@ import IconButton from '@material-ui/core/IconButton';
 import Grid from '@material-ui/core/Grid';
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 import {List, ListItem, ListItemAvatar, TextField} from "@material-ui/core";
-import {Edit, Phone} from "@material-ui/icons";
+import {AccountCircleOutlined, Edit, MailOutline, Phone} from "@material-ui/icons";
+import {GetUserResponse} from "../awsClient/models/profileModels";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -22,18 +23,14 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-function generate(element: React.ReactElement) {
-    return [0, 1, 2].map((value) =>
-        React.cloneElement(element, {
-            key: value,
-        }),
-    );
+interface InteractiveListProps{
+    userInfo: GetUserResponse | undefined
 }
 
-export default function InteractiveList() {
+export default function InteractiveList(props: InteractiveListProps) {
     const classes = useStyles();
     const [edit, setEdit] = useState(false);
-
+    console.log(props)
     function onClick() {
         setEdit(!edit)
     }
@@ -44,22 +41,51 @@ export default function InteractiveList() {
                 <Grid item xs={12} md={11}>
                     <div className={classes.demo}>
                         <List>
-                            {generate(
-                                <ListItem>
-                                    <ListItemAvatar>
-                                        <Avatar>
-                                            {/*<AccountCircleOutlined/>*/}
-                                            {/*<MailOutline/>*/}
-                                            <Phone/>
-                                        </Avatar>
-                                    </ListItemAvatar>
-                                    {!edit && <ListItemText
-                                        primary="Single-line item"
-                                        // secondary="Secondary text"
-                                    />}
-                                    {edit && <TextField type={"text"} defaultValue={"Single-line item"} autoFocus/>}
-                                </ListItem>
-                            )}
+                            <ListItem>
+                                <ListItemAvatar>
+                                    <Avatar>
+                                        <AccountCircleOutlined/>
+                                        {/*<MailOutline/>*/}
+                                        {/*<Phone/>*/}
+                                    </Avatar>
+                                </ListItemAvatar>
+                                {!edit && <ListItemText
+                                    primary={props.userInfo?.username || "Username"}
+                                />}
+                                {edit && <TextField type={"text"} defaultValue={"Single-line item"} autoFocus/>}
+                            </ListItem>
+                        </List>
+                        <List>
+                            <ListItem>
+                                <ListItemAvatar>
+                                    <Avatar>
+                                        {/*<AccountCircleOutlined/>*/}
+                                        {/*<MailOutline/>*/}
+                                        <Phone/>
+                                    </Avatar>
+                                </ListItemAvatar>
+                                {!edit && <ListItemText
+                                    primary={props.userInfo?.phone || "+91-XXXXXXXXXXX"}
+                                    // secondary="Secondary text"
+                                />}
+                                {edit && <TextField type={"text"} defaultValue={"Single-line item"} autoFocus/>}
+                            </ListItem>
+                        </List>
+                        <List>
+                            <ListItem>
+                                <ListItemAvatar>
+                                    <Avatar>
+                                        {/*<AccountCircleOutlined/>*/}
+                                        <MailOutline/>
+                                        {/*<Phone/>*/}
+                                    </Avatar>
+                                </ListItemAvatar>
+                                {!edit && <ListItemText
+                                    primary={props.userInfo?.email || "example@example.com"}
+                                    // secondary="Secondary text"
+                                />}
+                                {edit && <TextField type={"text"} defaultValue={"Single-line item"} autoFocus/>}
+                            </ListItem>
                         </List>
                     </div>
                 </Grid>

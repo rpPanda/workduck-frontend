@@ -11,10 +11,9 @@ import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {useFormFields} from "../libs/hooksLib";
-import {Auth} from 'aws-amplify';
 import {useHistory} from "react-router-dom";
 import {useAppContext} from "../libs/contextLib";
-import {signUp} from "../awsClient/profileClient";
+import {confirmSignUp, signIn, signUp} from "../awsClient/profileClient";
 
 function Copyright() {
     return (
@@ -56,19 +55,20 @@ export default function SignUp() {
     const [registered, setRegistered] = useState(false)
     const history = useHistory();
     const {setIsAuth} = useAppContext();
+
     async function handleSubmit(event: { preventDefault: () => void; }) {
         event.preventDefault()
-        if(!registered) {
+        if (!registered) {
             try {
-                await signUp({email:fields.email,username:fields.email,password:fields.password})
+                await signUp({email: fields.email, username: fields.email, password: fields.password})
                 setRegistered(true);
             } catch (e) {
                 alert(e.message)
             }
         } else {
             try {
-                await Auth.confirmSignUp(fields.email, fields.code);
-                await Auth.signIn(fields.email, fields.password);
+                await confirmSignUp({username: fields.email, code: fields.code})
+                await signIn({email:fields.email,password:fields.password})
                 setIsAuth(true);
                 history.push('/')
             } catch (e) {

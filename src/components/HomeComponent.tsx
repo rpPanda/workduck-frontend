@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Button, createStyles, Grid, Step, StepLabel, Stepper, Theme, Typography} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import UploadApk from "./UploadApkComponent";
-import { API } from "aws-amplify";
+import {updateUser} from "../awsClient/profileClient";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -27,12 +27,7 @@ export default function Home() {
 
     const handleNext = async () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
-        const resp = await API.post("workduck", "/user", {
-            body: {
-                email: "boy"
-            }
-        })
-        console.log(resp)
+        await updateUser({username:"Yolo bitch",email:"yes@yes.com"})
     };
 
     const handleBack = () => {
@@ -45,22 +40,10 @@ export default function Home() {
         return ['Upload your APK or APP file', 'Go through your app', 'View your Workflow on your dashboard'];
     }
 
-    function getStepContent(stepIndex: number) {
-        switch (stepIndex) {
-            case 0:
-                return 'Upload your APK or APP file';
-            case 1:
-                return 'Go through your app';
-            case 2:
-                return 'View your Workflow on your dashboard';
-            default:
-                return 'Unknown stepIndex';
-        }
-    }
-
     return (
         <div className={classes.root}>
             {activeStep == 0 && <UploadApk/>}
+            {activeStep == 1 && <UploadApk/>}
             <Stepper activeStep={activeStep} alternativeLabel>
                 {steps.map((label) => (
                     <Step key={label}>
