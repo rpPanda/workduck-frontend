@@ -1,7 +1,6 @@
 /* eslint-disable */
 
 
-import {sleep} from "./libs/helper";
 
 export function Farmer() {
   let videoSocket = null;
@@ -108,6 +107,7 @@ export function Farmer() {
   }
 
   function sendControlMessage(message) {
+    console.log(controlSocket, state)
     if (controlSocket && state === 'connected') {
       controlSocket.send(JSON.stringify(message));
     }
@@ -484,6 +484,9 @@ export function Farmer() {
     },
     performActions(action){
       handlePerformActions(action)
+    },
+    perform(req){
+      sendControlMessage(req)
     }
 
   };

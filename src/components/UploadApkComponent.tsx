@@ -1,34 +1,29 @@
 import React, {useState} from "react";
 import {Button, Grid} from "@material-ui/core";
 import {DropzoneDialog} from "material-ui-dropzone";
-import {Farmer} from "../farmer";
 import actions from '../test-2-action.json'
-import {createRemoteSession, getRemoteSession} from "../awsClient/devicefarmClient";
+import {createRemoteSession, getRemoteSession, stopRemoteSession} from "../awsClient/devicefarmClient";
 import {sleep} from "../libs/helper";
-export default function UploadApk(){
-    const [open,setOpen] = useState(false);
-    const farmerInit = Farmer()
 
-    // const handleSave = (files: any) =>{
-    //     setFiles(files)
-    //     setOpen(false)
-    // }
+export default function UploadApk(props: any) {
+    const {farmerInit} = props
+    const [open, setOpen] = useState(false);
+    const [objId, setObjId] = useState('')
     const handleClose = () => {
         setOpen(false)
     }
 
     const handleClick = async () => {
         let resp = await createRemoteSession()
+        setObjId(resp.objectId)
         const objectId = resp.objectId
         const deviceX = resp.device.resolution.width;
         const deviceY = resp.device.resolution.height;
-        while(!resp.endpoint){
+        while (!resp.endpoint) {
             resp = await getRemoteSession(objectId)
-            console.log(resp)
             await sleep(10000)
-            console.log(resp.endpoint)
-        }
-        if(resp.endpoint) {
+            }
+        if (resp.endpoint) {
             farmerInit.mount({
                 timeout: 10000,
                 endpoint: resp.endpoint,
@@ -47,17 +42,18 @@ export default function UploadApk(){
         let temp: any = []
         actions.map((action) => {
             temp.push(action)
-            // console.log(temp)
             if (action.message === 'TouchUpMessage') {
                 resultTemp.push(temp)
                 temp = []
             }
         })
-        console.log(resultTemp)
-        for (let i = 0; i < resultTemp.length; i++){
+        for (let i = 0; i < resultTemp.length; i++) {
             await sleep(3000)
-            console.log(resultTemp[i])
-            farmerInit.performActions(resultTemp[i])
+            for (let j=0;j<resultTemp[i].length;j++)
+            {
+                await sleep(10)
+                farmerInit.performAction(resultTemp[i][j])
+            }
         }
     }
 
@@ -69,6 +65,9 @@ export default function UploadApk(){
         farmerInit.saveToFile('test-1-action')
     }
 
+    const stopSession = async () => {
+        await stopRemoteSession(objId)
+    }
     return (
         <div className="homeSubRoot">
             <DropzoneDialog
@@ -102,7 +101,7 @@ export default function UploadApk(){
                         <Button variant={"contained"} onClick={handleSave}>Save Action</Button>
                     </Grid>
                     <Grid item xs={3}>
-                        <Button variant={"contained"} color={"secondary"} onClick={handleSave}>Stop []</Button>
+                        <Button variant={"contained"} color={"secondary"} onClick={stopSession}>Stop []</Button>
                     </Grid>
                 </Grid>
             </Grid>

@@ -7,6 +7,9 @@ import MenuAppBar from "./HeaderComponent";
 import Profile from "./ProfileComponent";
 import {makeStyles} from "@material-ui/core/styles";
 import Result from "./ActionResult";
+import {WebsocketTest} from "./WebsocketTest";
+import {Websocket2} from "./Websocket2";
+import {Farmer} from "../farmer1";
 
 const useStyles = makeStyles((theme) => ({
     appBarSpacer: theme.mixins.toolbar,
@@ -41,8 +44,11 @@ export default function Main() {
                     <Route path="/result">
                         <Result/>
                     </Route>
+                    <Route path="/test">
+                        <Websocket2/>
+                    </Route>
                     <Route path="/">
-                        <Home/>
+                        <WebsocketTest farmerInit={Farmer()}/>
                     </Route>
                 </Switch>
             </main>

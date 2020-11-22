@@ -3,6 +3,7 @@ import {Button, createStyles, Grid, Step, StepLabel, Stepper, Theme, Typography}
 import {makeStyles} from "@material-ui/core/styles";
 import UploadApk from "./UploadApkComponent";
 import {updateUser} from "../awsClient/profileClient";
+import {Farmer} from "../farmer";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -42,7 +43,7 @@ export default function Home() {
 
     return (
         <div className={classes.root}>
-            {activeStep == 0 && <UploadApk/>}
+            {activeStep == 0 && <UploadApk farmerInit={Farmer()}/>}
             {activeStep == 1 && <UploadApk/>}
             <Stepper activeStep={activeStep} alternativeLabel>
                 {steps.map((label) => (
