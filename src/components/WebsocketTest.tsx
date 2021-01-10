@@ -31,7 +31,7 @@ function MediaCard(props: any) {
     return (
         <Card className={classes.root}>
             <CardActionArea>
-                <img className={classes.media} src={'data:image/jpeg;base64,' + props.image.image}/>
+                <img alt={"Bigfoot"} className={classes.media} src={'data:image/jpeg;base64,' + props.image.image}/>
                 {/*<CardMedia*/}
                 {/*    className={classes.media}*/}
                 {/*    image={'https://image.shutterstock.com/image-photo/bright-spring-view-cameo-island-260nw-1048185397.jpg'}*/}

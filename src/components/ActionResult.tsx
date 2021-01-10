@@ -26,7 +26,6 @@ export default function Result() {
 
     function processAction() {
         const resultTemp: any = [];
-        let temp: any = []
         // actions.map((action) => {
         //     temp.push(action)
         //     // console.log(temp)
@@ -74,6 +73,7 @@ export default function Result() {
                         </Card>
                     </div>)
                 }
+                return null
             })}
 
         </div>

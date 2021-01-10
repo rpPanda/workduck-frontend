@@ -1,6 +1,5 @@
 import React from 'react';
 import {Route, Switch} from "react-router-dom";
-import Home from "./HomeComponent";
 import SignIn from "./SignInCompnent";
 import SignUp from "./SignUpComponent";
 import MenuAppBar from "./HeaderComponent";

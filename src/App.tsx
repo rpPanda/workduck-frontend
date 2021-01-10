@@ -1,7 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {
-    BrowserRouter as Router, useHistory,
-} from "react-router-dom";
+import {BrowserRouter as Router,} from "react-router-dom";
 import Main from "./components/MainComponent";
 import {AppContext} from "./libs/contextLib";
 import {Auth} from "aws-amplify";
@@ -11,7 +9,6 @@ import './App.css';
 export default function App() {
     const [isAuth, setIsAuth] = useState(false);
     const [isLoading, setIsloading] = useState(true);
-    const history = useHistory();
     useEffect(() => {
         onLoad();
     }, []);
