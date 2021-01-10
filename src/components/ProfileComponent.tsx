@@ -11,10 +11,9 @@ import {deepOrange} from "@material-ui/core/colors";
 import {Avatar} from "@material-ui/core";
 import InteractiveList from "./ProfileListComponent";
 import {getUser} from "../awsClient/profileClient";
-import { useHistory } from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 import {GetUserResponse} from "../awsClient/models/profileModels";
 import Loading from "./LoadingComponent";
-import {createProject, getProject} from "../awsClient/devicefarmClient";
 
 function Copyright() {
     return (
@@ -117,19 +116,18 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function Dashboard() {
-    const [user,setUser] = useState<GetUserResponse | undefined>();
-    const [loading,setLoading] = useState(true);
+    const [user, setUser] = useState<GetUserResponse | undefined>();
+    const [loading, setLoading] = useState(true);
     const classes = useStyles();
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
     const history = useHistory();
     useEffect(() => {
         onLoad();
-    },[])
+    })
 
-    async function onLoad(){
+    async function onLoad() {
         try {
             const user = await getUser()
-            const resp = await getProject()
             setUser(user)
         } catch (e) {
             history.push("/")
@@ -137,6 +135,7 @@ export default function Dashboard() {
             setLoading(false)
         }
     }
+
     return (
         <div>
             <Container className={classes.container}>
