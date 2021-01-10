@@ -1,25 +1,165 @@
 import React, {useEffect, useState} from "react";
+import {Backdrop, Button, createStyles, Grid, TextField, Theme} from "@material-ui/core";
+import {makeStyles} from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
+import Carousel from 'react-material-ui-carousel'
+import socketIOClient from "socket.io-client";
+import {useFormFields} from "../libs/hooksLib";
 
+const ENDPOINT = "http://localhost:4000";
+const socket = socketIOClient(ENDPOINT);
+
+
+const useStyles = makeStyles((theme: Theme) => createStyles({
+    root: {
+        maxWidth: 500,
+    },
+    media: {
+        height: 750,
+    },
+    backdrop: {
+        zIndex: theme.zIndex.drawer + 1,
+        color: '#fff',
+    },
+}))
+
+function MediaCard(props: any) {
+    const classes = useStyles();
+    return (
+        <Card className={classes.root}>
+            <CardActionArea>
+                <img className={classes.media} src={'data:image/jpeg;base64,' + props.image.image}/>
+                {/*<CardMedia*/}
+                {/*    className={classes.media}*/}
+                {/*    image={'https://image.shutterstock.com/image-photo/bright-spring-view-cameo-island-260nw-1048185397.jpg'}*/}
+                {/*    title="Contemplative Reptile"*/}
+                {/*/>*/}
+                <CardContent>
+                    <Typography gutterBottom variant="h5" component="h2">
+                        {props.image.action.toUpperCase()}
+                    </Typography>
+                    <Typography style={{overflowWrap: "break-word"}} variant="h6" color="textSecondary">
+                        {props.image.params.x &&
+                        <div>
+                            <b>Co-ordinates : </b>({props.image.params.x}, {props.image.params.y}) <br/>
+                            <b>Timestamp : </b> {props.image.params.timestamp} <br/>
+                        </div>
+                        }
+                        {props.image.params.start &&
+                        <div>
+                            <b>Start Co-ordinates
+                                : </b>({props.image.params.start.x}, {props.image.params.start.y}) <br/>
+                            <b>End Co-ordinates : </b>({props.image.params.end.x}, {props.image.params.end.y}) <br/>
+                            <b>Swipe Duration
+                                : </b> {(props.image.params.end.timestamp - props.image.params.start.timestamp) / 1000} ms <br/>
+                            <b>Timestamp : </b> {props.image.params.end.timestamp} <br/>
+                        </div>
+                        }
+                    </Typography>
+                </CardContent>
+            </CardActionArea>
+            {/*<CardActions>*/}
+            {/*    <Button size="small" color="primary">*/}
+            {/*        Share*/}
+            {/*    </Button>*/}
+            {/*    <Button size="small" color="primary">*/}
+            {/*        Learn More*/}
+            {/*    </Button>*/}
+            {/*</CardActions>*/}
+        </Card>
+    );
+}
+
+function Example(props: any) {
+    return (
+        <Carousel index={props.images.length - 1} autoPlay={false} navButtonsAlwaysVisible={true} animation={"slide"}>
+            {
+                props.images.map((item: any) => <MediaCard image={item}/>)
+            }
+        </Carousel>
+    )
+}
 
 export function WebsocketTest(props: any) {
+    const classes = useStyles();
+    const {farmerInit} = props
+    const [fields, handleFieldChange] = useFormFields({})
+    const [open, setOpen] = useState(false)
+    const [imgList, setImgList] = useState<any>([])
+    useEffect(() => {
+        socket.on('Clicked', (data: any) => {
+            setImgList((prev: any) => [...prev, data])
+        })
+        socket.on('Swiped', (data: any) => {
+            setImgList((prev: any) => [...prev, data])
+        })
+    }, [])
+
     function handleClick() {
-        const {farmerInit} = props
         farmerInit.mount({
             timeout: 10000,
             endpoint: 'XYZ',
             elementId: 'container1',
             dimensions: {x: 600, y: 1000},
-            deviceResolution: {x: 1080, y: 2160},
+            deviceResolution: {x: 1080, y: 1920},
             // eslint-disable-next-line @typescript-eslint/no-empty-function
             logCallback: function (state: any, message: any) {
             }
         })
+        farmerInit.toggleKeyboardListener(false)
     }
+
+    function handleStop() {
+        setOpen(true)
+        farmerInit.perform({message: 'StopRec', parameters: {}})
+    }
+
+    function handleSend() {
+        farmerInit.sendText(fields.inputText)
+    }
+
+    function handleRepeat() {
+        farmerInit.perform({message: 'Repeat', parameters: {}})
+    }
+
+    function handleClose() {
+        setOpen(false)
+    }
+
     return (
-        <div id="terminal">
-            <button onClick={handleClick}>Click</button>
-            <div id="container1">
-            </div>
+        <div id="terminal" style={{padding: 20}}>
+            <Backdrop className={classes.backdrop} open={open} onClick={handleClose}>
+                <Example images={imgList}/>
+            </Backdrop>
+            <Grid container justify={"space-between"}>
+                <Grid item xs={9}>
+                    <div id="container1">
+                    </div>
+                </Grid>
+                <Grid container spacing={4} justify={"center"} item xs={3} alignItems={"center"}
+                      alignContent={"center"}>
+                    <Grid item xs={3}>
+                        <Button variant={"contained"} color={"primary"} onClick={handleClick}>Start</Button>
+                    </Grid>
+                    <Grid item xs={3}>
+                        <Button variant={"contained"} color={"primary"} onClick={handleStop}>Stop</Button>
+                    </Grid>
+                    <Grid item xs={3}>
+                        <Button variant={"contained"} color={"primary"} onClick={handleRepeat}>Repeat</Button>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField variant={"outlined"} label={"Text Input"} id={"inputText"} value={fields.inputText}
+                                   onChange={handleFieldChange}/>
+                        <Button variant={"contained"} color={"primary"} onClick={handleSend} style={{margin:10}}>Send</Button>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Example images={imgList}/>
+                    </Grid>
+                </Grid>
+            </Grid>
         </div>
     )
 }

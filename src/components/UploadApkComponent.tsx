@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {Button, Grid} from "@material-ui/core";
 import {DropzoneDialog} from "material-ui-dropzone";
-import actions from '../test-2-action.json'
+// import actions from '../test-2-action.json'
 import {createRemoteSession, getRemoteSession, stopRemoteSession} from "../awsClient/devicefarmClient";
 import {sleep} from "../libs/helper";
 
@@ -40,13 +40,13 @@ export default function UploadApk(props: any) {
     const handleActions = async () => {
         const resultTemp: any = [];
         let temp: any = []
-        actions.map((action) => {
-            temp.push(action)
-            if (action.message === 'TouchUpMessage') {
-                resultTemp.push(temp)
-                temp = []
-            }
-        })
+        // actions.map((action) => {
+        //     temp.push(action)
+        //     if (action.message === 'TouchUpMessage') {
+        //         resultTemp.push(temp)
+        //         temp = []
+        //     }
+        // })
         for (let i = 0; i < resultTemp.length; i++) {
             await sleep(3000)
             for (let j=0;j<resultTemp[i].length;j++)

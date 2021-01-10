@@ -116,7 +116,7 @@ export function Farmer() {
     }
 
     function initVideoSocket(endpoint, logCallback) {
-        videoSocket = new WebSocket('ws://localhost:9002', 'minicap')
+        videoSocket = new WebSocket('ws://localhost:9002/video', 'minicap')
         videoSocket.binaryType = 'blob'
 
         videoSocket.onopen = function () {
@@ -374,7 +374,7 @@ export function Farmer() {
             scaleX = deviceResolution.x / settings.dimensions.x;
             scaleY = deviceResolution.y / settings.dimensions.y;
             createElements(settings.elementId, settings.dimensions);
-            initControlSocket('http://127.0.0.1:4000', settings.logCallback, settings.timeOut);
+            initControlSocket('http://localhost:4000', settings.logCallback, settings.timeOut);
             initVideoSocket(settings.endpoint, settings.logCallback);
             toggleKeyboard(true);
             addListeners();
@@ -402,4 +402,3 @@ export function Farmer() {
 
     };
 }
-

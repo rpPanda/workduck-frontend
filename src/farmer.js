@@ -341,100 +341,6 @@ export function Farmer() {
     return new Blob([ia], { type: mimeString });
   }
 
-  function scroll(){
-    removeTouchListeners()
-    const req = {
-      message: 'TouchDownMessage',
-      parameters: {x: 532.8, y: 1937.8125, pointer: 1, pressure: 100, frame_ratio: 0.5859375},
-    }
-    sendControlMessage(req);
-    const req1 = {
-      message: 'TouchMoveMessage',
-      parameters: {x: 532.8, y: 1928.671875, pointer: 1, pressure: 100, frame_ratio: 0.5859375},
-    }
-    console.log(req1)
-    sendControlMessage(req1);
-    const req2 = {
-      message: 'TouchMoveMessage',
-      parameters: {x: 535.1999999999999, y: 1913.4375, pointer: 1, pressure: 100, frame_ratio: 0.5859375},
-    }
-    console.log(req2)
-    sendControlMessage(req2);
-    const req3 = {
-      message: 'TouchMoveMessage',
-      parameters: {x: 537.6, y: 1889.0625, pointer: 1, pressure: 100, frame_ratio: 0.5859375},
-    }
-    console.log(req3)
-    sendControlMessage(req3);
-    const req4 = {
-      message: 'TouchMoveMessage',
-      parameters: {x: 540, y: 1858.59375, pointer: 1, pressure: 100, frame_ratio: 0.5859375},
-    }
-    console.log(req4)
-    sendControlMessage(req4);
-    const req5 = {
-      message: 'TouchMoveMessage',
-      parameters: {x: 544.8, y: 1818.984375, pointer: 1, pressure: 100, frame_ratio: 0.5859375},
-    }
-    console.log(req5)
-    sendControlMessage(req5);
-    const req6 = {
-      message: 'TouchMoveMessage',
-      parameters: {x: 549.6, y: 1779.375, pointer: 1, pressure: 100, frame_ratio: 0.5859375},
-    }
-    console.log(req6)
-    sendControlMessage(req6);
-    const req7 = {
-      message: 'TouchMoveMessage',
-      parameters: {x: 554.4, y: 1724.53125, pointer: 1, pressure: 100, frame_ratio: 0.5859375},
-    }
-    console.log(req7)
-    sendControlMessage(req7);
-    const req8 = {
-      message: 'TouchMoveMessage',
-      parameters: {x: 554.4, y: 1687.96875, pointer: 1, pressure: 100, frame_ratio: 0.5859375},
-    }
-    console.log(req8)
-    sendControlMessage(req8);
-    const req9 = {
-      message: 'TouchMoveMessage',
-      parameters: {x: 556.8, y: 1627.03125, pointer: 1, pressure: 100, frame_ratio: 0.5859375},
-    }
-    console.log(req9)
-    sendControlMessage(req9);
-    const req10 = {
-      message: 'TouchMoveMessage',
-      parameters: {x: 556.8, y: 1581.328125, pointer: 1, pressure: 100, frame_ratio: 0.5859375},
-    }
-    console.log(req10)
-    sendControlMessage(req10);
-    const req11 = {
-      message: 'TouchMoveMessage',
-      parameters: {x: 561.6, y: 1526.484375, pointer: 1, pressure: 100, frame_ratio: 0.5859375},
-    }
-    console.log(req11)
-    sendControlMessage(req11);
-    const req12 = {
-      message: 'TouchMoveMessage',
-      parameters: {x: 561.6, y: 1483.828125, pointer: 1, pressure: 100, frame_ratio: 0.5859375},
-    }
-    console.log(req12)
-    sendControlMessage(req12);
-    const req13 = {
-      message: 'TouchMoveMessage',
-      parameters: {x: 566.4, y: 1435.078125, pointer: 1, pressure: 100, frame_ratio: 0.5859375},
-    }
-    console.log(req13)
-    sendControlMessage(req13);
-    const req14 = {
-      message: 'TouchMoveMessage',
-      parameters: {x: 571.1999999999999, y: 1386.328125, pointer: 1, pressure: 100, frame_ratio: 0.5859375},
-    }
-    console.log(req14)
-    sendControlMessage(req14);
-    onMouseLeave()
-  }
-
   const handleSaveToPC = (jsonData,filename) => {
     const fileData = JSON.stringify(jsonData);
     const blob = new Blob([fileData], {type: "text/plain"});
@@ -448,7 +354,6 @@ export function Farmer() {
   function handlePerformActions(action){
         action.map((req) => {
           sendControlMessage(req);
-          // console.log(req)
         })
   }
 
@@ -475,9 +380,6 @@ export function Farmer() {
       text = inputText.split('');
       toggleKeyboard(false);
       sendSingleChar();
-    },
-    scrollVertical(){
-      scroll();
     },
     saveToFile(filename){
       handleSaveToPC(actions,filename)

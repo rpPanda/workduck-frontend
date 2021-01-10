@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import actions from '../test-3-action.json'
+// import actions from '../test-3-action.json'
 import {Button, Card, CardContent, Typography} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 
@@ -27,14 +27,14 @@ export default function Result() {
     function processAction() {
         const resultTemp: any = [];
         let temp: any = []
-        actions.map((action) => {
-            temp.push(action)
-            // console.log(temp)
-            if (action.message === 'TouchUpMessage') {
-                resultTemp.push(temp)
-                temp = []
-            }
-        })
+        // actions.map((action) => {
+        //     temp.push(action)
+        //     // console.log(temp)
+        //     if (action.message === 'TouchUpMessage') {
+        //         resultTemp.push(temp)
+        //         temp = []
+        //     }
+        // })
         setResult(resultTemp)
         // console.log(resultTemp)
     }
