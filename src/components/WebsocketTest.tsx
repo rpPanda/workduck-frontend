@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {Backdrop, Button, createStyles, Grid, TextField, Theme} from "@material-ui/core";
 import {makeStyles} from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -6,12 +6,8 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Carousel from 'react-material-ui-carousel'
-import socketIOClient from "socket.io-client";
 import {useFormFields} from "../libs/hooksLib";
-
-const ENDPOINT = "http://localhost:4000";
-const socket = socketIOClient(ENDPOINT);
-
+import {useHistory} from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
     root: {
@@ -84,19 +80,12 @@ function Example(props: any) {
 }
 
 export function WebsocketTest(props: any) {
+    const history = useHistory();
     const classes = useStyles();
     const {farmerInit} = props
     const [fields, handleFieldChange] = useFormFields({})
     const [open, setOpen] = useState(false)
-    const [imgList, setImgList] = useState<any>([])
-    useEffect(() => {
-        socket.on('Clicked', (data: any) => {
-            setImgList((prev: any) => [...prev, data])
-        })
-        socket.on('Swiped', (data: any) => {
-            setImgList((prev: any) => [...prev, data])
-        })
-    }, [])
+    // const [imgList, setImgList] = useState<any>([])
 
     function handleClick() {
         farmerInit.mount({
@@ -109,22 +98,25 @@ export function WebsocketTest(props: any) {
             logCallback: function (state: any, message: any) {
             }
         })
-        farmerInit.toggleKeyboardListener(false)
+        // farmerInit.toggleKeyboardListener(false)
     }
 
     function handleStop() {
         setOpen(true)
-        farmerInit.perform({message: 'StopRec', parameters: {}})
+        farmerInit.perform({action: 'StopRec', parameters: {timestamp: Date.now()}})
     }
 
-    function handleSend() {
-        farmerInit.sendText(fields.inputText)
-    }
+    // function handleSend() {
+    //     farmerInit.sendText(fields.inputText)
+    // }
 
     function handleRepeat() {
-        farmerInit.perform({message: 'Repeat', parameters: {}})
+        farmerInit.perform({action: 'Repeat', parameters: {id: props.match.params.id}})
     }
 
+    function previosPage(){
+        history.push('/')
+    }
     function handleClose() {
         setOpen(false)
     }
@@ -132,9 +124,12 @@ export function WebsocketTest(props: any) {
     return (
         <div id="terminal" style={{padding: 20}}>
             <Backdrop className={classes.backdrop} open={open} onClick={handleClose}>
-                <Example images={imgList}/>
+                {/*<Example images={imgList}/>*/}
             </Backdrop>
             <Grid container justify={"space-between"}>
+                <Grid item xs={12}>
+                    <Typography gutterBottom variant="h5" component="h2">{props.match.params.id}</Typography>
+                </Grid>
                 <Grid item xs={9}>
                     <div id="container1">
                     </div>
@@ -148,16 +143,20 @@ export function WebsocketTest(props: any) {
                         <Button variant={"contained"} color={"primary"} onClick={handleStop}>Stop</Button>
                     </Grid>
                     <Grid item xs={3}>
-                        <Button variant={"contained"} color={"primary"} onClick={handleRepeat}>Repeat</Button>
+                        <Button variant={"contained"} color={"primary"} onClick={handleRepeat}>Run</Button>
+                    </Grid>
+                    <Grid item xs={3}>
+                        <Button variant={"contained"} color={"primary"} onClick={previosPage}>Back</Button>
                     </Grid>
                     <Grid item xs={12}>
-                        <TextField variant={"outlined"} label={"Text Input"} id={"inputText"} value={fields.inputText}
-                                   onChange={handleFieldChange}/>
-                        <Button variant={"contained"} color={"primary"} onClick={handleSend} style={{margin:10}}>Send</Button>
+                        {/*<TextField variant={"outlined"} label={"Text Input"} id={"inputText"} value={fields.inputText}*/}
+                        {/*           onChange={handleFieldChange}/>*/}
+                        {/*<Button variant={"contained"} color={"primary"} onClick={handleSend}*/}
+                        {/*        style={{margin: 10}}>Send</Button>*/}
                     </Grid>
-                    <Grid item xs={12}>
-                        <Example images={imgList}/>
-                    </Grid>
+                    {/*<Grid item xs={12}>*/}
+                    {/*    <Example images={imgList}/>*/}
+                    {/*</Grid>*/}
                 </Grid>
             </Grid>
         </div>

@@ -1,14 +1,14 @@
 /* eslint-disable */
 
 
-import socketIOClient from "socket.io-client";
-
 export function Farmer() {
     let videoSocket = null;
+    let currentAction = '';
+    let currentActionParams = {};
     let controlSocket = null;
     let frameRequestIntervalId = null;
     let canvas = null;
-    let homeBtn = null;
+    let backBtn = null;
     let imgContent = null;
     let textPause = 500;
     let text = '';
@@ -68,7 +68,9 @@ export function Farmer() {
 
     function initControlSocket(endpoint, logCallback, timeOut) {
         let checkStatusIntervalId;
-        controlSocket = socketIOClient(endpoint);
+        controlSocket = new WebSocket('ws://localhost:9002/control')
+
+        // controlSocket = socketIOClient(endpoint);
 
         controlSocket.onopen = function () {
             console.log("socket open!")
@@ -99,7 +101,7 @@ export function Farmer() {
 
         function checkStatus() {
             const action = {
-                message: 'StatusMessage',
+                action: 'StatusMessage',
                 parameters: {},
             };
             // can't use sendControlMessage here since the reply from this message
@@ -110,9 +112,24 @@ export function Farmer() {
 
     function sendControlMessage(message) {
         if (controlSocket) {
-            controlSocket.emit(message.message, message.parameters);
+            determineAction(message)
             console.log(message)
         }
+    }
+
+    function determineAction(message) {
+        if (message.action === 'TouchDownMessage') {
+            currentAction = 'Click'
+            currentActionParams.start = message.parameters
+        } else if (message.action === 'TouchMoveMessage') {
+            currentAction = 'Swipe'
+            currentActionParams.end = message.parameters
+        } else if (message.action === 'TouchUpMessage') {
+            message.action = currentAction
+            message.parameters = currentActionParams
+            controlSocket.send(JSON.stringify(message))
+            currentActionParams = {}
+        } else controlSocket.send(JSON.stringify(message))
     }
 
     function initVideoSocket(endpoint, logCallback) {
@@ -121,10 +138,9 @@ export function Farmer() {
 
         videoSocket.onopen = function () {
             console.log('onopen', arguments)
-            sendControlMessage({message:'StartRec',parameters:null})
+            sendControlMessage({action: 'StartRec', parameters: null})
             videoSocket.send('560x1080/0')
             // frameCounters.requestResponseDiff++;
-
             // initFrameRequestInterval(initialFpsIntervalStepIndex);
         };
 
@@ -137,7 +153,7 @@ export function Farmer() {
         };
 
         videoSocket.onclose = function () {
-            sendControlMessage({message:'StopRec',parameters:null})
+            sendControlMessage({action: 'StopRec', parameters: {}})
             // clearInterval(frameRequestIntervalId);
             logCallback(state, '[Video] Connection is closed');
         };
@@ -186,7 +202,7 @@ export function Farmer() {
         const y = event.offsetY * scaleY;
         const ratio = this.clientWidth / this.clientHeight;
         const req = {
-            message: 'TouchDownMessage',
+            action: 'TouchDownMessage',
             parameters: {x: x, y: y, pointer: 1, pressure: 100, frame_ratio: ratio, timestamp: Date.now()},
         }
         // actions.push(req)
@@ -198,7 +214,7 @@ export function Farmer() {
         const y = event.offsetY * scaleY;
         const ratio = canvas.clientWidth / canvas.clientHeight;
         const req = {
-            message: 'TouchMoveMessage',
+            action: 'TouchMoveMessage',
             parameters: {x: x, y: y, pointer: 1, pressure: 100, frame_ratio: ratio, timestamp: Date.now()},
         }
         // actions.push(req)
@@ -208,7 +224,7 @@ export function Farmer() {
     function onMouseUp() {
         removeTouchListeners();
         const req = {
-            message: 'TouchUpMessage',
+            action: 'TouchUpMessage',
             parameters: {pointer: 1, timestamp: Date.now()},
         }
         // actions.push(req)
@@ -218,7 +234,7 @@ export function Farmer() {
     function onMouseLeave() {
         removeTouchListeners();
         const req = {
-            message: 'TouchUpMessage',
+            action: 'TouchUpMessage',
             parameters: {pointer: 1},
         }
 
@@ -245,17 +261,17 @@ export function Farmer() {
 
         canvas.addEventListener('mousedown', onMouseDown);
 
-        homeBtn.addEventListener('click', function () {
+        backBtn.addEventListener('click', function () {
             sendControlMessage({
-                message: 'HomeScreenMessage',
-                parameters: {},
+                action: 'BackMessage',
+                parameters: {timestamp: Date.now()},
             });
         });
     }
 
     function sendKey(keycode) {
         const req = {
-            message: 'KeyInputMessage',
+            action: 'KeyInputMessage',
             parameters: {keycode: keycode, timestamp: Date.now()},
         }
         // actions.push(req)
@@ -265,7 +281,7 @@ export function Farmer() {
 
     function sendEvent(keycode) {
         const req = {
-            message: 'KeyEventMessage',
+            action: 'KeyEventMessage',
             parameters: {keycode: keycode, timestamp: Date.now()},
         }
         // actions.push(req)
@@ -277,22 +293,21 @@ export function Farmer() {
         // handle special char events
         if ([8, 9, 13, 27, 37, 38, 39, 40, 46].includes(e.which)) {
             e.preventDefault();
-            sendEvent(e.which);
+            sendEvent(e.key);
         }
     }
 
     function trackKeyChars(e) {
         e.preventDefault();
-        sendKey(e.which);
+        sendKey(e.key);
     }
 
     function createElements(elementId, dimensions) {
         const container = document.getElementById(elementId);
-        console.log(elementId, dimensions)
-        homeBtn = document.createElement('button');
-        homeBtn.innerHTML = 'Home';
-        homeBtn.setAttribute('style', 'margin: 20px auto; display: block;')
-        container.appendChild(homeBtn);
+        backBtn = document.createElement('button');
+        backBtn.innerHTML = 'Back';
+        backBtn.setAttribute('style', 'margin: 20px auto; display: block;')
+        container.appendChild(backBtn);
 
         canvas = document.createElement('canvas');
         canvas.width = dimensions.x;
@@ -374,7 +389,7 @@ export function Farmer() {
             scaleX = deviceResolution.x / settings.dimensions.x;
             scaleY = deviceResolution.y / settings.dimensions.y;
             createElements(settings.elementId, settings.dimensions);
-            initControlSocket('http://localhost:4000', settings.logCallback, settings.timeOut);
+            initControlSocket('ws://localhost:9002/control', settings.logCallback, settings.timeOut);
             initVideoSocket(settings.endpoint, settings.logCallback);
             toggleKeyboard(true);
             addListeners();

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Route, Switch} from "react-router-dom";
 import SignIn from "./SignInCompnent";
 import SignUp from "./SignUpComponent";
@@ -8,7 +8,9 @@ import {makeStyles} from "@material-ui/core/styles";
 import Result from "./ActionResult";
 import {WebsocketTest} from "./WebsocketTest";
 import {Websocket2} from "./Websocket2";
+
 import {Farmer} from "../farmer1";
+import {TestCreationComponent} from "./TestCreationComponent";
 
 const useStyles = makeStyles((theme) => ({
     appBarSpacer: theme.mixins.toolbar,
@@ -24,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function Main() {
+    const [i,setI] = useState(0)
     const classes = useStyles();
     return (
         <div className={classes.root}>
@@ -43,13 +46,10 @@ export default function Main() {
                     <Route path="/result">
                         <Result/>
                     </Route>
-                    <Route path="/test">
-                        <Websocket2/>
-                    </Route>
+                    <Route path="/test/:id" render={(props => <WebsocketTest {...props} farmerInit={Farmer()}/>)}/>
                     <Route path="/">
-                        <WebsocketTest farmerInit={Farmer()}/>
-                    </Route>
-                </Switch>
+                        <TestCreationComponent num={i} setI={setI}/>
+                    </Route></Switch>
             </main>
         </div>
     )
